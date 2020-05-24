@@ -9,6 +9,6 @@ Incomplete - Broken Access Control
 Incomplete - Cross Site Scripting
 Incomplete - Insufficient Logging and Monitoring
 
-View Current sites and documents:
+View current sites and documents:
 Insecure: https://osu-capstone-project-insecure.herokuapp.com/
 Secure: https://osu-capstone-project.herokuapp.com/
