@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Update List{% endblock %}
+{% block content %}
+
+<!-- main container -->
+<div class = "container my-3">
+	
+<!-- form to update list -->
+    <h3>Update List</h3>
+    <form action="/update_list/{{ context.list_id }}" class="form-inline" method="post" id="updatelistform">
+        <input name="list_id" type="hidden" value="{{ context.list_id }}">
+        <tr>
+            <th scope="row">
+				<input class="form-control mr-2" name="list_name" value="{{ context.list_name }}" type="text">
+            </th>
+            <td>
+				<input class="form-control mr-2" name="list_desc" value="{{ context.list_desc }}" type="text">
+            </td>
+            <td>
+                <button class="btn btn-outline-success" type="submit">Update List</button>
+            </td>
+        </tr>
+    </form>
+
+</article>
+
+{% endblock %}

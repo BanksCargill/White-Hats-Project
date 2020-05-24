@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='css/login_styles.css') }}">
+    <title>White Hats Login</title>
+</head>
+
+<body>
+
+<div class="row justify-content-center mt-5">
+    <h2>White Hat Security Project</h2>
+</div>
+<div class="row justify-content-center">
+  <h4>Insecure Site</h4>
+</div>
+<div class="container">
+
+    <div class="row justify-content-center">
+    </div>
+    <div class="row  mt-5">
+        <div class="col-4 mt-2">
+            <div>
+              <form action="/reset_database" method="POST">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-warning btn-block">Reset Database for Testing purposes</button>
+                </div>
+              </form>
+
+            </div>
+            <div>
+                <h4><em>Learn How to Hack Us</em></h4>
+            </div>
+                <button type="button" onclick="window.open('./static/SQLInjection.pdf')" class="btn btn-light btn-lg btn-block">SQL Injection</button>
+                <button type="button" onclick="window.open('./static/BrokenAuthentication.pdf')" class="btn btn-light btn-lg btn-block">Broken Authentication</button>
+                <button type="button" onclick="window.open('./static/SensitiveDataExposure.pdf')" class="btn btn-light btn-lg btn-block">Sensitive Data Exposure</button>
+        </div>
+        <div class="col-6 mt-5">
+          <div class="mt-4"></div>
+            <!-- source: https://www.tutorialrepublic.com/snippets/preview.php?topic=bootstrap&file=simple-login-form-->
+            <div class="login-form">
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                {% if error %}
+                    <p class="error"><strong>Error:</strong> {{ error }}
+                {% endif %}
+
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <input type="text" name="username" class="form-control" placeholder="Username" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control" placeholder="Password" required="required">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                    </div>
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-center links">
+                            Don't have an account? <a href="{{ url_for('register')}}" class="ml-2">Sign Up</a>
+                        </div>
+                        <div class="d-flex justify-content-center links">
+                            <a href="{{ url_for('passwordRecovery')}}" class="ml-2">Forgot your password?</a>
+                        </div>
+                        <div class="d-flex justify-content-center links mt-4">
+                            <h5><strong>For Testing and Client use: </strong><a href="#">Login as guest</a></h5>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-end">
+        <div class="d-flex justify-content-center links mt-4">
+            <h6>WARNING: This site is intended as a guide and resource for implementing web attacks. With this in mind, please do not
+              enter any sensitive data into this application!</h6>
+        </div>
+    </div>
+</div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS for bootstrap -->
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

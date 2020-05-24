@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Update Task{% endblock %}
+{% block content %}
+<!-- main container -->
+<div class = "container my-3">
+
+<!-- form to update task -->
+    <h3>Update Task</h3>
+    <form action="/update_task/{{ context.list_id }}/{{ context.task_id }}" class="form-inline" method="post" id="updatetasksform">
+        <input name="task_id" type="hidden" value="{{ context.task_id }}">
+        <tr>
+            <th scope="row">
+                <select class="form-control" name="task_type" form="updatetasksform">
+					{% for taskType in context.taskTypes %}
+                        {% if taskType[0] == context.task_type %}
+						    <option value={{ taskType[0] }} selected>{{ taskType[1] }}</option>
+                        {% else %}
+                            <option value={{ taskType[0] }}>{{ taskType[1] }}</option>
+                        {% endif %}
+					{% endfor %}
+				</select>
+            </th>
+            <td>
+				<input class="form-control mr-2" name="task_desc" value="{{ context.task_desc }}" type="text">
+            </td>
+		    <td>
+                <!-- make sure default selected is correct -->
+                <select class="form-control" name="task_comp" form="updatetasksform">
+                    {% if context.task_comp == 0 %}
+                        <option value="0" selected>Not Completed</option>
+                        <option value="1">Completed</option>
+                    {% else %}
+                        <option value="0">Not Completed</option>
+                        <option value="1" selected>Completed</option>
+                    {% endif %}
+                </select>
+            </td>
+            <td>
+                <button class="btn btn-outline-success" type="submit">Update Task</button>
+            </td>
+        </tr>
+    </form>
+
+</article>
+
+{% endblock %}

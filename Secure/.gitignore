@@ -1,0 +1,7 @@
+*.pyc
+.vscode/
+env/
+Procfile
+db_credentials.py
+*.sql
+flask.cfg

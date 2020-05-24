@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Tasks{% endblock %}
+{% block content %}
+<!-- main container -->
+<div class = "container my-3">
+	<h2> {{context.list_name }} </h2>
+	<blockquote class="blockquote">{{ context.list_desc }}</blockquote>
+	<table class="table">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col"> Type of Task</th>
+				<!-- Would be cool to implement a sort based on these headers but not necessary for the project -->
+				<th scope="col"> Description</th>
+				<th scope="col"> Completed?</th>
+				<th></th>  <!-- these empty <th> tags are to extend the thead-light coloring across the table -->
+				<th></th>
+		</thead>
+		<tbody>
+		{% for row in context.rows %}
+		<tr>
+			<td>
+				{{ row[5] }}  <!-- dataType name -->
+			</td>
+			<td>
+				{{ row[3] }}  <!-- description -->
+			</td>
+			<td>
+				{% if row[4] == 0 %} <!-- row[4] = completed -->
+					No
+				{% else %}
+					Yes
+				{% endif %}
+			</td>
+			<td>
+				<div>
+					<button class="btn btn-outline-warning" onclick="window.location.href = '/update_task/{{ context.list_id }}/{{ row[0] }}'">Edit</button>
+       			</div>
+			</td>
+			<td>
+				<div>
+					<button class="btn btn-outline-warning" onclick="window.location.href = '/delete_task/{{ context.list_id }}/{{ row[0] }}'">Delete</button>
+        		</div>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+<!-- form to add task -->
+    <h3>Add a New Task</h3>
+    <form action="/add_task" class="form-inline" method="post" id="tasksform">
+        <input name="user_id" type="hidden" value="{{ context.user_id }}">
+		<input name="list_id" type="hidden" value="{{ context.list_id }}">
+		<input name="data_id" type="hidden" value="{{ context.dataType_id }}">
+        <tr>
+            <th scope="row">
+				<select class="form-control" name="task_type" form="tasksform">
+					{% for taskType in context.taskTypes %}
+						<option value={{ taskType[0] }}>{{ taskType[1] }}</option>
+					{% endfor %}
+				</select>
+            </th>
+            <td>
+				<input class="form-control mr-2" name="task_desc" placeholder="Description" type="text">
+            </td>
+			<td>
+				<select class="form-control" name="task_comp" form="tasksform">
+					<option value="0">Not Completed</option>
+					<option value="1">Completed</option>
+				</select>
+			</td>
+            <td>
+                <button class="btn btn-outline-success" type="submit">Add Task</button>
+            </td>
+        </tr>
+    </form>
+
+</article>
+
+{% endblock %}

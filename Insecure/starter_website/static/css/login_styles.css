@@ -1,0 +1,12 @@
+body {
+  background-color=black;
+  /*
+  img source:https://images.pexels.com/photos/841228/pexels-photo-841228.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260
+  */
+  background: url('../img/login_background2.jpeg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  color: white;
+}

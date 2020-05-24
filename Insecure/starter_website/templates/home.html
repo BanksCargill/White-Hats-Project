@@ -1,0 +1,75 @@
+<!-- This page is the home page for each user
+	It should list their lists in order of creation
+-->
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<!-- main container -->
+<div class = "container my-3">
+	<div class="row">
+		<form action="/reset_database/home" method="POST">
+			<div class="form-group">
+				<button type="submit" class="btn btn-warning btn-lg">Reset Database for Testing</button>
+			</div>
+		</form>
+	</div>
+{#	<h2> {{ context.user_name }}'s To-Do Lists </h2>#}
+	<h2> {{ current_user.username }}'s To-Do Lists </h2>
+
+	<table class="table">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col"> List Name</th>
+				<th scope="col"> Description</th>
+				<th></th>  <!-- these empty <th> tags are to extend the thead-light coloring across the table -->
+				<th></th>
+				<th></th>
+		</thead>
+		<tbody>
+		{% for row in context.rows %}
+		<tr>
+			<td>
+				{{ row[2] }} <!-- List name -->
+			</td>
+			<td>
+				{{ row[3] }} <!-- List description -->
+			</td>
+			<td>
+				<div>
+                    <a class="btn btn-outline-primary" href="{{ url_for('tasks', list_id=row[0]) }}">View</a>
+        		</div>
+			</td>
+			<td>
+				<div>
+                    <a class="btn btn-outline-info" href="{{ url_for('update_list', list_id=row[0]) }}">Update</a>
+        		</div>
+			</td>
+			<td>
+				<div>
+                    <a class="btn btn-outline-warning" href="{{ url_for('delete_list', list_id=row[0]) }}">Delete</a>
+        		</div>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+
+<!-- form to add list -->
+    <h3>Add a New List</h3>
+    <form action="/add_list" class="form-inline" method="POST">
+        <input name="user_id" type="hidden" value="{{ context.user_id }}">
+        <tr>
+            <th scope="row"><input class="form-control mr-2" name="list_name" placeholder="List Name" type="text">
+            </th>
+            <td>
+				<input class="form-control mr-2" name="list_desc" placeholder="Description" type="text">
+            </td>
+            <td>
+                <button class="btn btn-outline-success" type="submit">Add List</button>
+            </td>
+        </tr>
+    </form>
+
+</div> <!-- close container -->
+{% endblock %}

@@ -1,0 +1,77 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(
+	user_id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	username varchar(20) NOT NULL,
+	pword varchar(20) NOT NULL,
+  email varchar(50) NOT NULL UNIQUE
+);
+
+DROP TABLE IF EXISTS lists;
+CREATE TABLE lists(
+	list_id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	user_id int(11) NOT NULL,
+	name varchar(20) NOT NULL,
+	description varchar(80),
+	FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT table_info UNIQUE (user_id, name)
+);
+DROP TABLE IF EXISTS dataTypes;
+CREATE TABLE dataTypes(
+	dataType_id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name varchar(20) NOT NULL
+);
+
+DROP TABLE IF EXISTS tasks;
+CREATE TABLE tasks(
+	task_id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	list_id int(11) NOT NULL,
+	dataType_id int(11) NOT NULL,
+	description varchar(80) NOT NULL,
+	completed boolean NOT NULL DEFAULT 0,
+	FOREIGN KEY (list_id) REFERENCES lists (list_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (dataType_id) REFERENCES dataTypes (dataType_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+INSERT INTO users (email, username, pword)
+VALUES
+("username@password.com", "username", "password"),
+("Anonymous@123456.com", "Anonymous", "123456");
+
+INSERT INTO lists (user_id, name, description)
+VALUES
+((SELECT user_id FROM users WHERE username = "username"), "Books, 2020", "Books to read in 2020"),
+((SELECT user_id FROM users WHERE username = "username"), "Baby Names", "Potential baby girl names"),
+((SELECT user_id FROM users WHERE username = "Anonymous"), "January 21st", "to-do list");
+
+INSERT INTO dataTypes(name)
+VALUES 
+("Task"),
+("Event"),
+("Appointment"),
+("Note"),
+("Priority")
+;
+
+INSERT INTO tasks (list_id, dataType_id, description, completed)
+VALUES
+((SELECT list_id FROM lists WHERE name = "Books, 2020"), (SELECT dataType_id FROM dataTypes WHERE name="Task"), "The Lying Life of Adults", false),
+((SELECT list_id FROM lists WHERE name = "Books, 2020"), (SELECT dataType_id FROM dataTypes WHERE name="Task"), "Transcendent Kingdom", false),
+((SELECT list_id FROM lists WHERE name = "Books, 2020"), (SELECT dataType_id FROM dataTypes WHERE name="Task"), "My Dark Vanessa", false),
+((SELECT list_id FROM lists WHERE name = "Books, 2020"), (SELECT dataType_id FROM dataTypes WHERE name="Task"), "The Glass Hotel", false),
+((SELECT list_id FROM lists WHERE name = "January 21st"), (SELECT dataType_id FROM dataTypes WHERE name="Task"), "Mow the yard", false),
+((SELECT list_id FROM lists WHERE name = "January 21st"), (SELECT dataType_id FROM dataTypes WHERE name="Task"), "Weed whack front entrance", false),
+((SELECT list_id FROM lists WHERE name = "January 21st"), (SELECT dataType_id FROM dataTypes WHERE name="Task"), "Call vet", false),
+((SELECT list_id FROM lists WHERE name = "January 21st"), (SELECT dataType_id FROM dataTypes WHERE name="Task"), "Return library books", false)
+;  
+
+INSERT INTO tasks (list_id, dataType_id, description)
+VALUES
+((SELECT list_id FROM lists WHERE name = "Baby Names"), (SELECT dataType_id FROM dataTypes WHERE name="Note"), "Emma"),
+((SELECT list_id FROM lists WHERE name = "Baby Names"), (SELECT dataType_id FROM dataTypes WHERE name="Note"), "Olivia"),
+((SELECT list_id FROM lists WHERE name = "Baby Names"), (SELECT dataType_id FROM dataTypes WHERE name="Note"), "Ava"),
+((SELECT list_id FROM lists WHERE name = "Baby Names"), (SELECT dataType_id FROM dataTypes WHERE name="Note"), "Isabella"),
+((SELECT list_id FROM lists WHERE name = "Baby Names"), (SELECT dataType_id FROM dataTypes WHERE name="Note"), "Sophia"),
+((SELECT list_id FROM lists WHERE name = "Baby Names"), (SELECT dataType_id FROM dataTypes WHERE name="Note"), "Charlotte"),
+((SELECT list_id FROM lists WHERE name = "Baby Names"), (SELECT dataType_id FROM dataTypes WHERE name="Note"), "Amelia");
+
