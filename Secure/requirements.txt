@@ -6,7 +6,7 @@ Flask-Mail==0.9.1
 Flask-Talisman==0.7.0
 gunicorn==20.0.4
 itsdangerous==1.1.0
-Jinja2==2.11.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 mysql-connector==2.2.9
 mysqlclient @ file:///C:/Users/Home/Desktop/OSU/Spring-2020/467-Capstone/Capstone_secure/mysqlclient-1.4.6-cp38-cp38-win32.whl
